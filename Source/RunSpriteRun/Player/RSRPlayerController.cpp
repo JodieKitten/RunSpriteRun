@@ -3,6 +3,7 @@
 #include "RSRPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "RunSpriteRun/Character/RSRCharacter.h"
 
 ARSRPlayerController::ARSRPlayerController()
 {
@@ -32,34 +33,31 @@ void ARSRPlayerController::SetupInputComponent()
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::Move);
+	EnhancedInputComponent->BindAction(MoveLeftAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::MoveLeft);
+	EnhancedInputComponent->BindAction(MoveRightAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::MoveRight);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::Jump);
 }
 
-void ARSRPlayerController::Move(const FInputActionValue& InputActionValue)
+void ARSRPlayerController::MoveLeft(const FInputActionValue& InputActionValue)
 {
-	const FVector2D InputAxisVector = InputActionValue.Get<FVector2D>();
-	const FRotator Rotation = GetControlRotation();
-	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
-
-	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-	if (APawn* ControlledPawn = GetPawn<APawn>())
+	if (ARSRCharacter* ControlledCharacter = Cast<ARSRCharacter>(GetCharacter()))
 	{
-		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
+		ControlledCharacter->MoveLeft();
+	}
+}
+
+void ARSRPlayerController::MoveRight(const FInputActionValue& InputActionValue)
+{
+	if (ARSRCharacter* ControlledCharacter = Cast<ARSRCharacter>(GetCharacter()))
+	{
+		ControlledCharacter->MoveRight();
 	}
 }
 
 void ARSRPlayerController::Jump(const FInputActionValue& InputActionValue)
 {
-	const FVector InputAxisVector = InputActionValue.Get<FVector>();
-	const FRotator Rotation = GetControlRotation();
-	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
-
-	const FVector UpDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Z);
-
-	if (APawn* ControlledPawn = GetPawn<APawn>())
+	if (ACharacter* ControllerCharacter = GetCharacter())
 	{
-		ControlledPawn->AddMovementInput(UpDirection, InputAxisVector.Z);
+		ControllerCharacter->Jump();
 	}
 }

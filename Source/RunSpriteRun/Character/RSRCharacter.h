@@ -21,6 +21,10 @@ class RUNSPRITERUN_API ARSRCharacter : public APaperCharacter
 
 public:
 	ARSRCharacter();
+	void SetFlipbook();
+	void MoveLeft();
+	void MoveRight();
+	void HandleRotation();
 
 protected:
 	virtual void BeginPlay() override;
@@ -33,6 +37,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* Camera;
 
+	bool bIsMovingLeft = false;
+
 	UPROPERTY(EditAnywhere, Category = Flipbooks)
 	TObjectPtr<UPaperFlipbook> IdleFlipbook;
 
@@ -44,5 +50,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Flipbooks)
 	TObjectPtr<UPaperFlipbook> DeathFlipbook;
-	
+
+
 };

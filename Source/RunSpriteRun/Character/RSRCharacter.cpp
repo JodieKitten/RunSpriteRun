@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ARSRCharacter::ARSRCharacter()
 {
@@ -12,10 +13,7 @@ ARSRCharacter::ARSRCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->TargetArmLength = 200.0f;
-	SpringArm->bInheritPitch = false;
-	SpringArm->bInheritRoll = false;
-	SpringArm->bInheritYaw = false;
+	SpringArm->TargetArmLength = 300.0f;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
@@ -26,13 +24,54 @@ ARSRCharacter::ARSRCharacter()
 void ARSRCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	if (IsValid(GetSprite()))
-	{
-		GetSprite()->SetFlipbook(IdleFlipbook);
-	}
+
 }
 
 void ARSRCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	SetFlipbook();
+	HandleRotation();
+}
+
+void ARSRCharacter::SetFlipbook()
+{
+	if (GetCharacterMovement()->IsFalling())
+	{
+		GetSprite()->SetFlipbook(JumpFlipbook);
+	}
+
+	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
+	if (CurrentVelocity.Length() > 0)
+	{
+		GetSprite()->SetFlipbook(MoveFlipbook);
+	}
+	else if (CurrentVelocity.Length() == 0)
+	{
+		GetSprite()->SetFlipbook(IdleFlipbook);
+	}
+}
+
+void ARSRCharacter::MoveLeft()
+{
+	AddMovementInput(FVector(-1.0f, 0.0f, 0.0f));
+	bIsMovingLeft = true;
+}
+
+void ARSRCharacter::MoveRight()
+{
+	AddMovementInput(FVector(1.0f, 0.0f, 0.0f));
+	bIsMovingLeft = false;
+}
+
+void ARSRCharacter::HandleRotation()
+{
+	if (GetCharacterMovement()->Velocity.X < 0.0f || ((GetCharacterMovement()->Velocity.X == 0.0f && bIsMovingLeft)))
+	{
+		GetSprite()->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
+	}
+	else if (GetCharacterMovement()->Velocity.X > 0.0f || ((GetCharacterMovement()->Velocity.X == 0.0f && !bIsMovingLeft)))
+	{
+		GetSprite()->SetWorldRotation(FRotator(0.0f, 0.0f, 0.0f));
+	}
 }

@@ -31,11 +31,15 @@ private:
 	TObjectPtr<UInputMappingContext> MappingContext;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	TObjectPtr<UInputAction> MoveAction;
+	TObjectPtr<UInputAction> MoveLeftAction;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputAction> MoveRightAction;
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> JumpAction;
 
-	void Move(const FInputActionValue& InputActionValue);
+	void MoveLeft(const FInputActionValue& InputActionValue);
+	void MoveRight(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
 };
