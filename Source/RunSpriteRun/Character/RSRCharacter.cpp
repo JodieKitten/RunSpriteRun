@@ -52,16 +52,9 @@ void ARSRCharacter::SetFlipbook()
 	}
 }
 
-void ARSRCharacter::MoveLeft()
+void ARSRCharacter::Jump()
 {
-	AddMovementInput(FVector(-1.0f, 0.0f, 0.0f));
-	bIsMovingLeft = true;
-}
-
-void ARSRCharacter::MoveRight()
-{
-	AddMovementInput(FVector(1.0f, 0.0f, 0.0f));
-	bIsMovingLeft = false;
+	Super::Jump();
 }
 
 void ARSRCharacter::HandleRotation()
@@ -74,4 +67,10 @@ void ARSRCharacter::HandleRotation()
 	{
 		GetSprite()->SetWorldRotation(FRotator(0.0f, 0.0f, 0.0f));
 	}
+}
+
+void ARSRCharacter::Move(FVector Direction, bool InIsMovingLeft)
+{
+	AddMovementInput(Direction);
+	bIsMovingLeft = InIsMovingLeft;
 }

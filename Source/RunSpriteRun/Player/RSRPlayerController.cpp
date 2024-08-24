@@ -25,6 +25,8 @@ void ARSRPlayerController::BeginPlay()
 	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::LockOnCapture);
 	InputModeData.SetHideCursorDuringCapture(true);
 	SetInputMode(InputModeData);
+
+	ControlledCharacter = Cast<ARSRCharacter>(GetCharacter());
 }
 
 void ARSRPlayerController::SetupInputComponent()
@@ -40,24 +42,24 @@ void ARSRPlayerController::SetupInputComponent()
 
 void ARSRPlayerController::MoveLeft(const FInputActionValue& InputActionValue)
 {
-	if (ARSRCharacter* ControlledCharacter = Cast<ARSRCharacter>(GetCharacter()))
+	if (ControlledCharacter)
 	{
-		ControlledCharacter->MoveLeft();
+		ControlledCharacter->Move(FVector(-1.0f, 0.0f, 0.0f), true);
 	}
 }
 
 void ARSRPlayerController::MoveRight(const FInputActionValue& InputActionValue)
 {
-	if (ARSRCharacter* ControlledCharacter = Cast<ARSRCharacter>(GetCharacter()))
+	if (ControlledCharacter)
 	{
-		ControlledCharacter->MoveRight();
+		ControlledCharacter->Move(FVector(1.0f, 0.0f, 0.0f), true);
 	}
 }
 
 void ARSRPlayerController::Jump(const FInputActionValue& InputActionValue)
 {
-	if (ACharacter* ControllerCharacter = GetCharacter())
+	if (ControlledCharacter)
 	{
-		ControllerCharacter->Jump();
+		ControlledCharacter->Jump();
 	}
 }

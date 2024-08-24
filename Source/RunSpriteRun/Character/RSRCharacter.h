@@ -22,9 +22,9 @@ class RUNSPRITERUN_API ARSRCharacter : public APaperCharacter
 public:
 	ARSRCharacter();
 	void SetFlipbook();
-	void MoveLeft();
-	void MoveRight();
+	virtual void Jump() override;
 	void HandleRotation();
+	void Move(FVector Direction, bool InIsMovingLeft);
 
 protected:
 	virtual void BeginPlay() override;

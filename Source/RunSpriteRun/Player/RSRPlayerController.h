@@ -13,6 +13,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class ARSRCharacter;
 
 UCLASS()
 class RUNSPRITERUN_API ARSRPlayerController : public APlayerController
@@ -27,6 +28,8 @@ protected:
 	virtual void SetupInputComponent() override;
 
 private:
+	ARSRCharacter* ControlledCharacter;
+
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputMappingContext> MappingContext;
 
