@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright KittenGames
 
 #include "RSRPlayerController.h"
 #include "EnhancedInputSubsystems.h"
@@ -52,7 +52,7 @@ void ARSRPlayerController::MoveRight(const FInputActionValue& InputActionValue)
 {
 	if (ControlledCharacter)
 	{
-		ControlledCharacter->Move(FVector(1.0f, 0.0f, 0.0f), true);
+		ControlledCharacter->Move(FVector(1.0f, 0.0f, 0.0f), false);
 	}
 }
 
@@ -62,4 +62,9 @@ void ARSRPlayerController::Jump(const FInputActionValue& InputActionValue)
 	{
 		ControlledCharacter->Jump();
 	}
+}
+
+void ARSRPlayerController::PauseMovement(bool bShouldPause)
+{
+	bShouldPause ? DisableInput(this) : EnableInput(this);	
 }

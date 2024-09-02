@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright KittenGames
 
 #pragma once
 
@@ -22,7 +22,7 @@ class RUNSPRITERUN_API ARSRPlayerController : public APlayerController
 	
 public:
 	ARSRPlayerController();
-
+	void PauseMovement(bool bShouldPause);
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -45,4 +45,5 @@ private:
 	void MoveLeft(const FInputActionValue& InputActionValue);
 	void MoveRight(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
+
 };

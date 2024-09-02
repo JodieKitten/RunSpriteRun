@@ -6,6 +6,8 @@
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "RunSpriteRun/Player/RSRPlayerController.h"
 
 ARSRCharacter::ARSRCharacter()
 {
@@ -24,7 +26,6 @@ ARSRCharacter::ARSRCharacter()
 void ARSRCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void ARSRCharacter::Tick(float DeltaTime)
@@ -40,13 +41,21 @@ void ARSRCharacter::SetFlipbook()
 	{
 		GetSprite()->SetFlipbook(JumpFlipbook);
 	}
+	if (bIsDead)
+	{
+		GetSprite()->SetFlipbook(DeathFlipbook);
+	}
+	if (bIsRespawning)
+	{
+		GetSprite()->SetFlipbook(RespawningFlipbook);
+	}
 
 	FVector CurrentVelocity = GetCharacterMovement()->Velocity;
 	if (CurrentVelocity.Length() > 0)
 	{
 		GetSprite()->SetFlipbook(MoveFlipbook);
 	}
-	else if (CurrentVelocity.Length() == 0)
+	else if (CurrentVelocity.Length() == 0 && !bIsDead && !bIsRespawning)
 	{
 		GetSprite()->SetFlipbook(IdleFlipbook);
 	}
@@ -65,8 +74,48 @@ void ARSRCharacter::HandleRotation()
 	}
 	else if (GetCharacterMovement()->Velocity.X > 0.0f || ((GetCharacterMovement()->Velocity.X == 0.0f && !bIsMovingLeft)))
 	{
-		GetSprite()->SetWorldRotation(FRotator(0.0f, 0.0f, 0.0f));
+		GetSprite()->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 	}
+}
+
+void ARSRCharacter::RespawnCharacter()
+{
+	SetActorLocation(RespawnLocation);
+	bIsDead = false;
+	bIsRespawning = true;
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ARSRCharacter::SetRespawnToFalse, 0.3f, false);
+}
+
+void ARSRCharacter::SetRespawnToFalse()
+{
+	bIsRespawning = false;
+	PauseMovement(false);
+}
+
+void ARSRCharacter::PauseMovement(bool bShouldPause)
+{
+	if (ARSRPlayerController* PlayerController = Cast<ARSRPlayerController>(GetController()))
+	{
+		PlayerController->PauseMovement(bShouldPause);
+	}
+}
+
+void ARSRCharacter::Die()
+{
+	bIsDead = true;
+	PauseMovement(true);
+
+	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), FRotator::ZeroRotator);
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ARSRCharacter::RespawnCharacter, 0.3f, false);
+}
+
+void ARSRCharacter::SetRespawnLocation(FVector InRespawnLocation)
+{
+	RespawnLocation = InRespawnLocation;
 }
 
 void ARSRCharacter::Move(FVector Direction, bool InIsMovingLeft)
