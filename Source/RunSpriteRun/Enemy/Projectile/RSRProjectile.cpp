@@ -31,6 +31,7 @@ ARSRProjectile::ARSRProjectile()
 void ARSRProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	SetLifeSpan(Lifespan);
 
 	if(!Sphere->OnComponentBeginOverlap.IsBound())
 	{ 	

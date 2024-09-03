@@ -8,6 +8,9 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "GameplayTask.h"
+#include "Tasks/GameplayTask_WaitDelay.h"
+
 ARSRFallingActor::ARSRFallingActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -51,36 +54,48 @@ void ARSRFallingActor::OnTriggerBoxOverlap(UPrimitiveComponent* OverlappedCompon
 	bool bFromSweep, 
 	const FHitResult& SweepResult)
 {
+
 	if (ARSRCharacter* Character = Cast<ARSRCharacter>(OtherActor))
 	{
-		// set lifespan to just over the respawn delay so respawn is still triggered
-		SetLifeSpan(RespawnDelay + 1.0f);
-		if (DropDelay > 0.0f)
+		if (bIsAlreadyOverlapping)
 		{
-			FTimerHandle TimerHandle;
-			GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRFallingActor::DelayedDrop, DropDelay, false);
+			return; // Avoid handling the overlap again
 		}
 
-		ProjectileMovementComponent->Activate();
-		UGameplayStatics::PlaySoundAtLocation(this, FallingSound, GetActorLocation(), FRotator::ZeroRotator);
+		bIsAlreadyOverlapping = true;
 
-		FTimerHandle TimerHandle;
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRFallingActor::SpawnFallingActor, RespawnDelay, false);
+		// Set lifespan to just over the respawn delay so respawn is still triggered
+		SetLifeSpan(RespawnDelay + 1.0f);
+
+		if (DropDelay > 0.0f)
+		{
+			FTimerHandle DropTimerHandle;
+			GetWorldTimerManager().SetTimer(DropTimerHandle, this, &ARSRFallingActor::DelayedDrop, DropDelay, false);
+		}
+		else
+		{
+			ProjectileMovementComponent->Activate();
+			UGameplayStatics::PlaySoundAtLocation(this, FallingSound, GetActorLocation(), FRotator::ZeroRotator);	
+		}
+
+		FTimerHandle RespawnTimerHandle;
+		GetWorldTimerManager().SetTimer(RespawnTimerHandle, this, &ARSRFallingActor::SpawnFallingActor, RespawnDelay, false);
 	}
 }
 
 void ARSRFallingActor::SpawnFallingActor()
 {
-	//Destroy();
-
 	FActorSpawnParameters Params;
 	GetWorld()->SpawnActor<ARSRFallingActor>(FallingActorClass, StartingTransform, Params);
+
+	// Reset overlap flag
+	bIsAlreadyOverlapping = false;
 }
 
 void ARSRFallingActor::DelayedDrop()
 {
-	// this function does nothing
-	// we just need to delay the activation of the overlap function so platforms do not drop immediately
+	ProjectileMovementComponent->Activate();
+	UGameplayStatics::PlaySoundAtLocation(this, FallingSound, GetActorLocation(), FRotator::ZeroRotator);
 }
 
 void ARSRFallingActor::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent,

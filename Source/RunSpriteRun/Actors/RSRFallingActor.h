@@ -27,13 +27,13 @@ public:
 	float DropDelay = 0.0f;
 
 	UFUNCTION()
-	virtual void OnSphereOverlap(
+	void OnSphereOverlap(
 		UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex,
 		bool bFromSweep,
-		const FHitResult& SweepResult);
+		const FHitResult& SweepResult) override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -41,6 +41,9 @@ protected:
 	FTransform StartingTransform;
 
 private:
+	bool bHasSpawned = false;
+	bool bIsAlreadyOverlapping = false;
+
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* DefaultRoot;
 

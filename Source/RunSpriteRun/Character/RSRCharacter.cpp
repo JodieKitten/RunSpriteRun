@@ -26,6 +26,7 @@ ARSRCharacter::ARSRCharacter()
 void ARSRCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	SetRespawnLocation(GetActorLocation());
 }
 
 void ARSRCharacter::Tick(float DeltaTime)

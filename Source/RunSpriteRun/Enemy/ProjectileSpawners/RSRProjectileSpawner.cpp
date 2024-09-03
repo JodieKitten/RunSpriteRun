@@ -23,7 +23,7 @@ void ARSRProjectileSpawner::BeginPlay()
 	Super::BeginPlay();
 
 	FTimerHandle TimerHandle;
-	GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRProjectileSpawner::Fire, 2.0f, true, 2.0f);
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRProjectileSpawner::Fire, SpawnSpeed, true, SpawnSpeed);
 }
 
 void ARSRProjectileSpawner::Fire()

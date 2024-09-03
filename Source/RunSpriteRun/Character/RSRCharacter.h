@@ -27,8 +27,10 @@ public:
 	ARSRCharacter();
 	void Move(FVector Direction, bool InIsMovingLeft);
 	virtual void Jump() override;
-	void Die();
 	void SetRespawnLocation(FVector InRespawnLocation);
+
+	UFUNCTION(BlueprintCallable)
+	void Die();
 
 	bool bIsDead = false;
 	bool bIsRespawning = false;

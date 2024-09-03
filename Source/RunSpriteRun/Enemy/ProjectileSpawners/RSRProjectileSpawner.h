@@ -36,5 +36,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = Projectile)
 	USoundWave* ShootSound;
 
-
+	UPROPERTY(EditAnywhere)
+	float SpawnSpeed = 2.0f;
 };

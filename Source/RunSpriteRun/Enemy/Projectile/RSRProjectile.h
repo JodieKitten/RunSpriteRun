@@ -44,5 +44,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	USphereComponent* Sphere;
+
+	UPROPERTY(EditAnywhere)
+	float Lifespan = 3.0f;
 	
 };
