@@ -15,7 +15,7 @@ void IDamageInterface::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent,
 	if (ARSRCharacter* Character = Cast<ARSRCharacter>(OtherActor))
 	{
 		Character->Die();
-		OverlappedComponent->GetOwner()->Destroy();
+		//OverlappedComponent->GetOwner()->Destroy();
 	}
 
 }
