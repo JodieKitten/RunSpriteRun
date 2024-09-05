@@ -15,6 +15,7 @@ ARSRDamageActor::ARSRDamageActor()
 
 	Flipbook = CreateDefaultSubobject<UPaperFlipbookComponent>("Flipbook");
 	Flipbook->SetupAttachment(SceneComponent);
+	Flipbook->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComponent");
 	BoxComponent->SetupAttachment(Flipbook);

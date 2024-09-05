@@ -15,7 +15,7 @@ ARSRCharacter::ARSRCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->TargetArmLength = 300.0f;
+	SpringArm->TargetArmLength = FOVBase;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
@@ -34,6 +34,7 @@ void ARSRCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	SetFlipbook();
 	HandleRotation();
+	UpdateSpringArmLength(DeltaTime);
 }
 
 void ARSRCharacter::SetFlipbook()
@@ -101,6 +102,26 @@ void ARSRCharacter::PauseMovement(bool bShouldPause)
 	{
 		PlayerController->PauseMovement(bShouldPause);
 	}
+}
+
+void ARSRCharacter::UpdateSpringArmLength(float DeltaTime)
+{
+	if (SpringArm)
+	{
+		SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, TargetSpringArmLength, DeltaTime, InterpSpeed);
+	}
+}
+
+void ARSRCharacter::ChangeCameraView()
+{
+	TargetSpringArmLength = FOVAirbone;
+}
+
+void ARSRCharacter::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+
+	TargetSpringArmLength = FOVBase;
 }
 
 void ARSRCharacter::Die()

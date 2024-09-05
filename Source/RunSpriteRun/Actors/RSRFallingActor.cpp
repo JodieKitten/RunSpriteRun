@@ -20,6 +20,7 @@ ARSRFallingActor::ARSRFallingActor()
 
 	Sprite = CreateDefaultSubobject<UPaperSpriteComponent>("Sprite");
 	Sprite->SetupAttachment(DefaultRoot);
+	Sprite->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	DamageBox = CreateDefaultSubobject<UBoxComponent>("DamageBox");
 	DamageBox->SetupAttachment(Sprite);

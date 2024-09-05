@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/InterpToMovementComponent.h"
 #include "RSRMovingActor.generated.h"
 
 class UInterpToMovementComponent;
 class UPaperSpriteComponent;
+struct FInterpControlPoint;
 
 UCLASS()
 class RUNSPRITERUN_API ARSRMovingActor : public AActor
@@ -37,9 +39,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	FVector LocationOne;
 
-	UPROPERTY(EditAnywhere)
-	FVector LocationTwo;
-
 	void ResetLocationOnPlayerDeath();
 	void ReactivateInterpMovement();
+
+	FInterpControlPoint ControlPointOne;
+	FInterpControlPoint ControlPointTwo;
 };

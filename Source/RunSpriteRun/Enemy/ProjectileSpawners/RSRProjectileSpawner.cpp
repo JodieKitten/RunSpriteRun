@@ -13,6 +13,7 @@ ARSRProjectileSpawner::ARSRProjectileSpawner()
 
 	Sprite = CreateDefaultSubobject<UPaperSpriteComponent>("Sprite");
 	SetRootComponent(Sprite);
+	Sprite->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>("ProjectileSpawnPoint");
 	ProjectileSpawnPoint->SetupAttachment(Sprite);

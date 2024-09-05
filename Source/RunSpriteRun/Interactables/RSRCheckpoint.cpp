@@ -12,6 +12,7 @@ ARSRCheckpoint::ARSRCheckpoint()
 
 	Flipbook = CreateDefaultSubobject<UPaperFlipbookComponent>("Flipbook");
 	SetRootComponent(Flipbook);
+	Flipbook->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	OverlapBox = CreateDefaultSubobject<UBoxComponent>("OverlapBox");
 	OverlapBox->SetupAttachment(Flipbook);

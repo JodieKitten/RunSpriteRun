@@ -23,6 +23,8 @@ ARSRProjectile::ARSRProjectile()
 
 	Flipbook = CreateDefaultSubobject<UPaperFlipbookComponent>("Flipbook");
 	Flipbook->SetupAttachment(SceneComponent);
+	Flipbook->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+
 
 	Sphere = CreateDefaultSubobject<USphereComponent>("SphereComponent");
 	Sphere->SetupAttachment(Flipbook);
