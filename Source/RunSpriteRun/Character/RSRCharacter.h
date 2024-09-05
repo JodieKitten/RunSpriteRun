@@ -25,27 +25,24 @@ class RUNSPRITERUN_API ARSRCharacter : public APaperCharacter
 
 public:
 	ARSRCharacter();
+
 	void Move(FVector Direction, bool InIsMovingLeft);
 	virtual void Jump() override;
+
+	FVector StartingLocation;
 	void SetRespawnLocation(FVector InRespawnLocation);
-	void ChangeCameraView();
-
-	virtual void Landed(const FHitResult& Hit) override;
-
-	UFUNCTION(BlueprintCallable)
-	void Die();
-
-	bool bIsDead = false;
-	bool bIsRespawning = false;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool bIsBouncing = false;
 
 	UFUNCTION(BlueprintCallable)
 	void RespawnCharacter();
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	USpringArmComponent* SpringArm;
+	void ChangeCameraView();
+	virtual void Landed(const FHitResult& Hit) override;
+
+	UFUNCTION(BlueprintCallable)
+	void Die();
+	bool bIsDead = false;
+
+	bool bHasKey = false;
 
 protected:
 	virtual void BeginPlay() override;
@@ -64,7 +61,8 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	UCameraComponent* Camera;
 
-	bool bIsMovingLeft = false;
+	UPROPERTY(EditDefaultsOnly)
+	USpringArmComponent* SpringArm;
 
 	UPROPERTY(EditAnywhere, Category = Flipbooks)
 	TObjectPtr<UPaperFlipbook> IdleFlipbook;
@@ -82,6 +80,10 @@ private:
 	TObjectPtr<UPaperFlipbook> RespawningFlipbook;
 
 	FVector RespawnLocation;
+
+	bool bIsMovingLeft = false;
+
+	bool bIsRespawning = false;
 
 	UPROPERTY(VisibleAnywhere)
 	float FOVBase = 300.0f;

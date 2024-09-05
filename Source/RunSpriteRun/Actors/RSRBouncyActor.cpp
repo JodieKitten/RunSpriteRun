@@ -53,9 +53,12 @@ void ARSRBouncyActor::OnComponentOverlap(UPrimitiveComponent* OverlappedComponen
 
 void ARSRBouncyActor::ChangeCameraView()
 {
-	if (Character)
-	{	
-		Character->ChangeCameraView();
+	if (bChangeCameraOnUse)
+	{
+		if (Character)
+		{	
+			Character->ChangeCameraView();
+		}
 	}
 }
 

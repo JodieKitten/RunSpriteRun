@@ -4,58 +4,49 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "RSRBouncyActor.generated.h"
-
+#include "RSRLock.generated.h"
 
 class UPaperSpriteComponent;
-class USoundBase;
-class UPaperSprite;
-class ARSRCharacter;
 class UBoxComponent;
+class USoundBase;
+class ARSRGem;
+class ARSRCharacter;
 
 UCLASS()
-class RUNSPRITERUN_API ARSRBouncyActor : public AActor
+class RUNSPRITERUN_API ARSRLock : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	ARSRBouncyActor();
+	ARSRLock();
+	virtual void Tick(float DeltaTime) override;
+
+	ARSRGem* FinalGem;
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	ARSRCharacter* Character;
-
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* SceneComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
+	USceneComponent* FinalGemSpawnPoint;
+
+	UPROPERTY(EditDefaultsOnly)
 	UPaperSpriteComponent* Sprite;
 
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* OverlapBox;
 
 	UPROPERTY(EditAnywhere)
-	float LaunchVelocityZ = 800.0f;
+	USoundBase* UnlockSound;
 
 	UPROPERTY(EditAnywhere)
-	float LaunchVelocityX = 0.0f;
-
-	UPROPERTY(EditAnywhere)
-	bool bChangeCameraOnUse = false;
-
-	UPROPERTY(EditAnywhere)
-	USoundBase* BoingSound;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UPaperSprite> TrampolineUp;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UPaperSprite> TrampolineDown;
+	USoundBase* VictorySound;
 
 	UFUNCTION()
-	void OnComponentOverlap(
+	void OnBoxOverlap(
 		UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
@@ -63,6 +54,8 @@ private:
 		bool bFromSweep,
 		const FHitResult& SweepResult);
 
-	void ChangeCameraView();
-	void ResetTrampoline();
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ARSRGem> Gem;
+
+	ARSRCharacter* Character;
 };
