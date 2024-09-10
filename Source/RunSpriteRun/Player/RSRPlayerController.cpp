@@ -133,10 +133,12 @@ void ARSRPlayerController::OnGameWon()
 	SetInputMode(InputModeData);
 
 	bShowMouseCursor = true;
-	PauseMovement(true);
+	//PauseMovement(true);
 
 	if (TimerWidget)
 	{
 		TimerWidget->bTimerActive = false;
 	}
+
+	ControlledCharacter->SetHeartSpriteVisible();
 }
