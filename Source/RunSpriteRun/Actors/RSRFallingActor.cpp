@@ -8,9 +8,6 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-#include "GameplayTask.h"
-#include "Tasks/GameplayTask_WaitDelay.h"
-
 ARSRFallingActor::ARSRFallingActor()
 {
 	PrimaryActorTick.bCanEverTick = false;

@@ -12,6 +12,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UPaperFlipbook;
 class USoundWave;
+class UPaperSpriteComponent;
 
 /**
  * 
@@ -43,6 +44,11 @@ public:
 	bool bIsDead = false;
 
 	bool bHasKey = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPaperSpriteComponent* HeartSprite;
+
+	void SetHeartSpriteVisible();
 
 protected:
 	virtual void BeginPlay() override;

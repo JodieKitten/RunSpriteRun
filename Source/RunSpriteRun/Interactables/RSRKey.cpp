@@ -5,7 +5,9 @@
 #include "Paper2D/Classes/PaperSpriteComponent.h"
 #include "Components/BoxComponent.h"
 #include "RunSpriteRun/Character/RSRCharacter.h"
+#include "RunSpriteRun/Player/RSRPlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "RunSpriteRun/UI/RSRHUD.h"
 
 ARSRKey::ARSRKey()
 {
@@ -42,5 +44,10 @@ void ARSRKey::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 		UGameplayStatics::PlaySoundAtLocation(this, CollectedSound, GetActorLocation(), FRotator::ZeroRotator);
 		Sprite->SetVisibility(false);
 		SetActorEnableCollision(false);
+
+		ARSRPlayerController* Controller = Cast<ARSRPlayerController>(Character->GetController());
+		ARSRHUD* HUD = Cast<ARSRHUD>(Controller->GetHUD());
+		if(HUD)
+			HUD->AddKeyFoundOverlay();
 	}
 }

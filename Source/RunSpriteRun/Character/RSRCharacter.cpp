@@ -4,6 +4,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "PaperSpriteComponent.h"
 #include "PaperFlipbook.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -21,6 +22,15 @@ ARSRCharacter::ARSRCharacter()
 	Camera->SetupAttachment(SpringArm);
 	Camera->SetProjectionMode(ECameraProjectionMode::Perspective);
 	Camera->SetFieldOfView(90.0f);
+
+	HeartSprite = CreateDefaultSubobject<UPaperSpriteComponent>("HeartSprite");
+	HeartSprite->SetupAttachment(RootComponent);
+	HeartSprite->SetVisibility(false);
+}
+
+void ARSRCharacter::SetHeartSpriteVisible()
+{
+	HeartSprite->SetVisibility(true);
 }
 
 void ARSRCharacter::BeginPlay()

@@ -8,6 +8,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "RSRGem.h"
 #include "Components/ArrowComponent.h"
+#include "RunSpriteRun/UI/RSRHUD.h"
+#include "RunSpriteRun/Player/RSRPlayerController.h"
 
 ARSRLock::ARSRLock()
 {
@@ -30,7 +32,7 @@ void ARSRLock::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Character->bHasKey)
+	if (Character && Character->bHasKey)
 	{
 		if (FinalGem)
 		{
@@ -56,6 +58,9 @@ void ARSRLock::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	if (Character == OtherActor)
 	{
+		ARSRPlayerController* Controller = Cast<ARSRPlayerController>(Character->GetController());
+		ARSRHUD* HUD = Cast<ARSRHUD>(Controller->GetHUD());
+
 		if (Character->bHasKey)
 		{
 			UGameplayStatics::SpawnSoundAtLocation(this, UnlockSound, GetActorLocation(), FRotator::ZeroRotator);
@@ -63,6 +68,9 @@ void ARSRLock::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 			Sprite->SetVisibility(false);
 			SetActorEnableCollision(false);
 			Character->bHasKey = false;
+
+			HUD->AddWinScreenOverlay();
+			Controller->OnGameWon();
 		}
 		else
 		{
@@ -72,6 +80,8 @@ void ARSRLock::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 			{
 				FinalGem->Waypoint->SetRelativeLocation(Character->StartingLocation);
 			}
+
+			HUD->AddKeyNeededOverlay();
 		}
 	}
 }
