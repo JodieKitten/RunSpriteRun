@@ -13,21 +13,25 @@ bool UPauseScreenWidget::Initialize()
 		return false;
 	}
 
-	if (ReturnButton && !ReturnButton->OnClicked.IsBound())
+	if (QuitButton && !QuitButton->OnClicked.IsBound())
 	{
-		ReturnButton->OnClicked.AddDynamic(this, &UPauseScreenWidget::ReturnButtonClicked);
+		QuitButton->OnClicked.AddDynamic(this, &UPauseScreenWidget::QuitButtonClicked);
 	}
 	if (ContinueButton && !ContinueButton->OnClicked.IsBound())
 	{
 		ContinueButton->OnClicked.AddDynamic(this, &UPauseScreenWidget::ContinueButtonClicked);
 	}
+	if (MainMenuButton && !MainMenuButton->OnClicked.IsBound())
+	{
+		MainMenuButton->OnClicked.AddDynamic(this, &UPauseScreenWidget::MainMenuButtonClicked);
+	}
 
 	return true;
 }
 
-void UPauseScreenWidget::ReturnButtonClicked()
+void UPauseScreenWidget::QuitButtonClicked()
 {
-	ReturnButton->SetIsEnabled(false);
+	QuitButton->SetIsEnabled(false);
 	UKismetSystemLibrary::QuitGame(this, GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit, false);
 }
 
@@ -35,4 +39,10 @@ void UPauseScreenWidget::ContinueButtonClicked()
 {
 	UGameplayStatics::SetGamePaused(this, false);
 	RemoveFromParent();
+}
+
+void UPauseScreenWidget::MainMenuButtonClicked()
+{
+	MainMenuButton->SetIsEnabled(false);
+	UGameplayStatics::OpenLevel(this, FName("Menu"));
 }

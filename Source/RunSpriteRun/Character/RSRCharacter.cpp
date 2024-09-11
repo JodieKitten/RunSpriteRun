@@ -67,6 +67,11 @@ void ARSRCharacter::SetFlipbook()
 	if (CurrentVelocity.Length() > 0)
 	{
 		GetSprite()->SetFlipbook(MoveFlipbook);
+
+		if (GetSprite()->GetPlaybackPositionInFrames() == 1)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, RunningSound, GetActorLocation(), 1.0f, 1.0f, 0.0f, nullptr, SoundConcurrency);
+		}
 	}
 	else if (CurrentVelocity.Length() == 0 && !bIsDead && !bIsRespawning)
 	{

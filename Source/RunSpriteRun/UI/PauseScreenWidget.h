@@ -24,16 +24,22 @@ protected:
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UButton* ReturnButton;
+	UButton* QuitButton;
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ContinueButton;
 
+	UPROPERTY(meta = (BindWidget))
+	UButton* MainMenuButton;
+
 	UFUNCTION()
-	void ReturnButtonClicked();
+	void QuitButtonClicked();
 
 	UFUNCTION()
 	void ContinueButtonClicked();
+
+	UFUNCTION()
+	void MainMenuButtonClicked();
 
 	UTimerWidget* TimerWidget;
 };

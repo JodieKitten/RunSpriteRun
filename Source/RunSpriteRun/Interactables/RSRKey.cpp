@@ -47,7 +47,6 @@ void ARSRKey::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 
 		ARSRPlayerController* Controller = Cast<ARSRPlayerController>(Character->GetController());
 		ARSRHUD* HUD = Cast<ARSRHUD>(Controller->GetHUD());
-		if(HUD)
-			HUD->AddKeyFoundOverlay();
+		if (HUD) HUD->AddKeyFoundOverlay();
 	}
 }

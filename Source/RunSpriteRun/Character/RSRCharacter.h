@@ -13,6 +13,7 @@ class UCameraComponent;
 class UPaperFlipbook;
 class USoundWave;
 class UPaperSpriteComponent;
+class USoundConcurrency;
 
 /**
  * 
@@ -60,6 +61,12 @@ private:
 
 	void SetRespawnToFalse();
 	void PauseMovement(bool bShouldPause);
+
+	UPROPERTY(EditAnywhere)
+	USoundConcurrency* SoundConcurrency;
+
+	UPROPERTY(EditAnywhere, Category = Character)
+	USoundWave* RunningSound;
 
 	UPROPERTY(EditAnywhere, Category = Character)
 	USoundWave* DeathSound;

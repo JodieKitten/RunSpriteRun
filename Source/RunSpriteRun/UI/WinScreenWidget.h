@@ -23,14 +23,20 @@ protected:
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UButton* ReturnButton;
+	UButton* QuitButton;
 	
 	UPROPERTY(meta = (BindWidget))
 	UButton* RetryButton;
 
+	UPROPERTY(meta = (BindWidget))
+	UButton* MainMenuButton;
+
 	UFUNCTION()
-	void ReturnButtonClicked();
+	void QuitButtonClicked();
 
 	UFUNCTION()
 	void RetryButtonClicked();
+
+	UFUNCTION()
+	void MainMenuButtonClicked();
 };

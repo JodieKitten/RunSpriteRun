@@ -31,7 +31,12 @@ float ARSRFishyReward::TransformedSin()
 	return Amplitude * FMath::Sin(RunningTime * TimeConstant);
 }
 
-void ARSRFishyReward::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ARSRFishyReward::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, 
+	AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, 
+	int32 OtherBodyIndex,
+	bool bFromSweep, 
+	const FHitResult& SweepResult)
 {
 	if (ARSRCharacter* Character = Cast<ARSRCharacter>(OtherActor))
 	{
