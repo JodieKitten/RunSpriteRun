@@ -99,15 +99,15 @@ private:
 	bool bIsRespawning = false;
 
 	UPROPERTY(VisibleAnywhere)
-	float FOVBase = 300.0f;
+	float FOVBase = 700.0f;
 
 	UPROPERTY(EditAnywhere)
-	float FOVAirbone = 500.0f;
+	float FOVAirbone = 900.0f;
 
-	float TargetSpringArmLength;
+	float TargetOrthoView;
 
 	UPROPERTY(EditAnywhere)
 	float InterpSpeed = 5.0f;
 
-	void UpdateSpringArmLength(float DeltaTime);
+	void UpdateOrthoView(float DeltaTime);
 };

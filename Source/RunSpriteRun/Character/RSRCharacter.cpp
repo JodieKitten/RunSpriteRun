@@ -16,12 +16,12 @@ ARSRCharacter::ARSRCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->TargetArmLength = FOVBase;
+	//SpringArm->TargetArmLength = FOVBase;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);
-	Camera->SetProjectionMode(ECameraProjectionMode::Perspective);
-	Camera->SetFieldOfView(90.0f);
+	Camera->SetProjectionMode(ECameraProjectionMode::Orthographic);
+	Camera->SetOrthoWidth(FOVBase);
 
 	HeartSprite = CreateDefaultSubobject<UPaperSpriteComponent>("HeartSprite");
 	HeartSprite->SetupAttachment(RootComponent);
@@ -45,7 +45,7 @@ void ARSRCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	SetFlipbook();
 	HandleRotation();
-	UpdateSpringArmLength(DeltaTime);
+	UpdateOrthoView(DeltaTime);
 }
 
 void ARSRCharacter::SetFlipbook()
@@ -120,24 +120,24 @@ void ARSRCharacter::PauseMovement(bool bShouldPause)
 	}
 }
 
-void ARSRCharacter::UpdateSpringArmLength(float DeltaTime)
+void ARSRCharacter::UpdateOrthoView(float DeltaTime)
 {
-	if (SpringArm)
+	if (Camera)
 	{
-		SpringArm->TargetArmLength = FMath::FInterpTo(SpringArm->TargetArmLength, TargetSpringArmLength, DeltaTime, InterpSpeed);
+		Camera->SetOrthoWidth(FMath::FInterpTo(Camera->OrthoWidth, TargetOrthoView, DeltaTime, InterpSpeed));
 	}
 }
 
 void ARSRCharacter::ChangeCameraView()
 {
-	TargetSpringArmLength = FOVAirbone;
+	TargetOrthoView = FOVAirbone;
 }
 
 void ARSRCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
 
-	TargetSpringArmLength = FOVBase;
+	TargetOrthoView = FOVBase;
 }
 
 void ARSRCharacter::Die()

@@ -7,6 +7,8 @@
 #include "MainMenuWidget.generated.h"
 
 class UButton;
+class UTextBlock;
+
 /**
  * 
  */
@@ -30,4 +32,12 @@ private:
 
 	UFUNCTION()
 	void StartButtonClicked();
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* BestTimeText;
+
+	UFUNCTION()
+	FText SetBestTimeText();
+
+	float BestTime;
 };
