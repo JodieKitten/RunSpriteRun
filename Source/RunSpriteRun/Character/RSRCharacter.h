@@ -71,7 +71,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = Character)
 	USoundWave* DeathSound;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))
 	UCameraComponent* Camera;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -98,11 +98,11 @@ private:
 
 	bool bIsRespawning = false;
 
-	UPROPERTY(VisibleAnywhere)
-	float FOVBase = 700.0f;
+	UPROPERTY(EditAnywhere)
+	float FOVBase = 2000.0f;
 
 	UPROPERTY(EditAnywhere)
-	float FOVAirbone = 900.0f;
+	float FOVAirbone = 2500.0f;
 
 	float TargetOrthoView;
 
