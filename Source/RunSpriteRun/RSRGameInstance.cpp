@@ -8,7 +8,6 @@
 void URSRGameInstance::Init()
 {
 	Super::Init();
-	//LoadGame();
 }
 
 void URSRGameInstance::SaveGame()

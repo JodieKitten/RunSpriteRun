@@ -8,7 +8,7 @@
 #include "RunSpriteRun/UI/PauseScreenWidget.h"
 #include "RunSpriteRun/UI/TimerWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "RunSpriteRun/RSRGameInstance.h"
+#include "RunSpriteRun/GameMode/RSRGameModeBase.h"
 
 ARSRPlayerController::ARSRPlayerController()
 {
@@ -18,23 +18,22 @@ ARSRPlayerController::ARSRPlayerController()
 void ARSRPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	check(MappingContext);
-
-	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-
-	Subsystem->AddMappingContext(MappingContext, 0);
-	bShowMouseCursor = false;
-
-	FInputModeGameAndUI InputModeData;
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::LockOnCapture);
-	InputModeData.SetHideCursorDuringCapture(true);
-	SetInputMode(InputModeData);
 
 	ControlledCharacter = Cast<ARSRCharacter>(GetCharacter());
 	HUD = Cast<ARSRHUD>(GetHUD());
 
+	AddSubsystemMappingContext();
+	SetPlayInputMode();
 	OnGameStart();
+}
+
+void ARSRPlayerController::SetPlayInputMode()
+{
+	FInputModeGameAndUI InputModeData;
+	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::LockOnCapture);
+	InputModeData.SetHideCursorDuringCapture(true);
+	SetInputMode(InputModeData);
+	bShowMouseCursor = false;
 }
 
 void ARSRPlayerController::OnGameStart()
@@ -62,6 +61,11 @@ void ARSRPlayerController::StartGameTimer()
 
 	TimerWidget->bTimerActive = true;
 	TimerWidget->AddToViewport();
+
+	if (ARSRGameModeBase* GameMode = Cast<ARSRGameModeBase>(UGameplayStatics::GetGameMode(this)))
+	{
+		GameMode->SetupGameWonDelegate();
+	}
 }
 
 void ARSRPlayerController::SetupInputComponent()
@@ -74,6 +78,16 @@ void ARSRPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MoveRightAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::MoveRight);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::Jump);
 	EnhancedInputComponent->BindAction(PauseAction, ETriggerEvent::Triggered, this, &ARSRPlayerController::PauseGame);
+}
+
+void ARSRPlayerController::AddSubsystemMappingContext()
+{
+	check(MappingContext);
+
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	check(Subsystem);
+
+	Subsystem->AddMappingContext(MappingContext, 0);
 }
 
 void ARSRPlayerController::MoveLeft(const FInputActionValue& InputActionValue)
@@ -109,15 +123,18 @@ void ARSRPlayerController::PauseGame(const FInputActionValue& InputActionValue)
 	}
 
 	PauseScreenWidget->AddToViewport();
+	SetMenuInputMode();
+	UGameplayStatics::SetGamePaused(this, true);
+}
 
+void ARSRPlayerController::SetMenuInputMode()
+{
 	FInputModeGameAndUI InputModeData;
 	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	InputModeData.SetHideCursorDuringCapture(true);
 	SetInputMode(InputModeData);
 
 	bShowMouseCursor = true;
-
-	UGameplayStatics::SetGamePaused(this, true);
 }
 
 void ARSRPlayerController::PauseMovement(bool bShouldPause)
@@ -127,18 +144,12 @@ void ARSRPlayerController::PauseMovement(bool bShouldPause)
 
 void ARSRPlayerController::OnGameWon()
 {
-	FInputModeGameAndUI InputModeData;
-	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-	InputModeData.SetHideCursorDuringCapture(true);
-	SetInputMode(InputModeData);
-
-	bShowMouseCursor = true;
+	SetMenuInputMode();
 	//PauseMovement(true);
+	ControlledCharacter->SetHeartSpriteVisible();
 
 	if (TimerWidget)
 	{
 		TimerWidget->bTimerActive = false;
 	}
-
-	ControlledCharacter->SetHeartSpriteVisible();
 }

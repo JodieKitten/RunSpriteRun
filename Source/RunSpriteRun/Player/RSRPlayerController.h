@@ -35,6 +35,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	void SetPlayInputMode();
 	virtual void SetupInputComponent() override;
 
 private:
@@ -67,10 +68,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> PauseAction;
 
+	void AddSubsystemMappingContext();
 	void MoveLeft(const FInputActionValue& InputActionValue);
 	void MoveRight(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
 	void PauseGame(const FInputActionValue& InputActionValue);
+
+	void SetMenuInputMode();
 
 	void OnGameStart();
 

@@ -23,9 +23,6 @@ class RUNSPRITERUN_API URSRGameInstance : public UGameInstance
 	URSRSaveGame* GameData;
 
 public:
-	UPROPERTY()
-	float BestTime;
-
 	void SaveGame();
 	void LoadGame();
 	void SavePlayerTimeData(float BestTimeRecorded);

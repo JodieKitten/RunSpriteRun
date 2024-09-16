@@ -6,7 +6,11 @@
 #include "Blueprint/UserWidget.h"
 #include "TimerWidget.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBestTimeUpdatedDelegate, float, NewBestTime);
+
 class UTextBlock;
+class ARSRGameModeBase;
+
 /**
  * 
  */
@@ -16,31 +20,37 @@ class RUNSPRITERUN_API UTimerWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	virtual void Tick(FGeometry MyGeometry, float InDeltaTime);
-	bool BestTimeNotSet();
-
-	float CurrentTime = 0.0f;
-
-	UPROPERTY()
-	float BestTime = 7200.0f;
-
 	bool bTimerActive = false;
 
-	UFUNCTION()
-	FText SetCurrentTimeText();
-
-	UFUNCTION()
-	FText SetBestTimeText();
+	UPROPERTY()
+	FOnBestTimeUpdatedDelegate OnBestTimeUpdatedDelegate;
 
 protected:
 	virtual bool Initialize() override;
 
 private:
+	ARSRGameModeBase* GameMode;
+
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* CurrentTimeText;
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* BestTimeText;
 
-	FTimerHandle GameTimer;
+	float CurrentTime = 0.0f;
+
+	float BestTime;
+
+	float DefaultBestTime = 7200.0f;
+
+	UPROPERTY(EditAnywhere)
+	float CountdownSeconds = 3.0f;
+
+	bool IsBestTimeDefaultTime();
+
+	UFUNCTION()
+	FText SetCurrentTimeText();
+
+	UFUNCTION()
+	FText SetBestTimeText();
 };

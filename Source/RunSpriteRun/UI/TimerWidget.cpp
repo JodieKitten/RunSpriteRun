@@ -7,6 +7,9 @@
 #include "RunSpriteRun/RSRGameInstance.h"
 #include "RunSpriteRun/RSRSaveGame.h"
 
+#include "RunSpriteRun/GameMode/RSRGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
+
 bool UTimerWidget::Initialize()
 {
 	if (!Super::Initialize())
@@ -26,44 +29,34 @@ bool UTimerWidget::Initialize()
 		BestTimeText->TextDelegate.BindUFunction(this, FName("SetBestTimeText"));
 	}
 
-	if (URSRGameInstance* GameInstance = Cast<URSRGameInstance>(GetGameInstance()))
+	GameMode = Cast<ARSRGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (GameMode)
 	{
-		GameInstance->LoadGame();
-		BestTime = GameInstance->GetGameData()->BestTime;
+		BestTime = GameMode->GetBestTime();
 	}
 
 	return true;
 }
 
-void UTimerWidget::Tick(FGeometry MyGeometry, float InDeltaTime)
+bool UTimerWidget::IsBestTimeDefaultTime()
 {
-	Super::Tick(MyGeometry, InDeltaTime);
-
-	SetCurrentTimeText();
-}
-
-bool UTimerWidget::BestTimeNotSet()
-{
-	return BestTime == 7200.0f;
+	return BestTime == DefaultBestTime;
 }
 
 FText UTimerWidget::SetCurrentTimeText()
 {
 	if (bTimerActive)
 	{
-		CurrentTime = GetWorld()->GetTimeSeconds() - 3.0f;
+		// We want the timer to start at 0, after the initial game countdown
+		CurrentTime = GetWorld()->GetTimeSeconds() - CountdownSeconds;
 	}
 	else
 	{
-		CurrentTime = CurrentTime;
-
 		if (CurrentTime < BestTime)
 		{
-			BestTime = CurrentTime;
-			if (URSRGameInstance* GameInstance = Cast<URSRGameInstance>(GetGameInstance()))
-			{
-				GameInstance->SavePlayerTimeData(BestTime);
-			}
+		 	BestTime = CurrentTime;
+
+			OnBestTimeUpdatedDelegate.Broadcast(BestTime);
 		}
 	}
 
@@ -73,13 +66,11 @@ FText UTimerWidget::SetCurrentTimeText()
 
 FText UTimerWidget::SetBestTimeText()
 {
-	// if BestTime hasn't been overwritten yet, set to an empty FText
-	if (BestTimeNotSet())
+	if (IsBestTimeDefaultTime())
 	{
 		return FText();
 	}
 
 	FTimespan Timespan = UKismetMathLibrary::MakeTimespan(0, 0, 0, BestTime, 0);
-
 	return FText::AsTimespan(Timespan);
 }

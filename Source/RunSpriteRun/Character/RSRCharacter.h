@@ -42,6 +42,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Die();
+
 	bool bIsDead = false;
 
 	bool bHasKey = false;
