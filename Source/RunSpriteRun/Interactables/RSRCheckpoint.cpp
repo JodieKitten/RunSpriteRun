@@ -3,6 +3,7 @@
 #include "RSRCheckpoint.h"
 #include "Paper2D/Classes/PaperFlipbookComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "RunSpriteRun/Character/RSRCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -23,6 +24,7 @@ void ARSRCheckpoint::BeginPlay()
 	Super::BeginPlay();
 
 	OverlapBox->OnComponentBeginOverlap.AddDynamic(this, &ARSRCheckpoint::OnTriggerBoxOverlap);
+	Flipbook->SetFlipbook(IdleCheckpoint);
 }
 
 void ARSRCheckpoint::OnTriggerBoxOverlap(

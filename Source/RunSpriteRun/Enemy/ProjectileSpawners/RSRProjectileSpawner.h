@@ -38,4 +38,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float SpawnSpeed = 2.0f;
+
+	UPROPERTY(EditAnywhere)
+	float ProjectileLifespan = 3.0f;
 };

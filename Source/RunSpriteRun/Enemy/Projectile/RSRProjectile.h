@@ -20,6 +20,10 @@ class RUNSPRITERUN_API ARSRProjectile : public AActor, public IDamageInterface
 public:	
 	ARSRProjectile();
 
+	// Allow edit to lifespan from the spawner itself
+	UPROPERTY(EditAnywhere)
+	float Lifespan = 3.0f;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -45,7 +49,6 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	USphereComponent* Sphere;
 
-	UPROPERTY(EditAnywhere)
-	float Lifespan = 3.0f;
+
 	
 };

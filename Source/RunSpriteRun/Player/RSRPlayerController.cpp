@@ -23,7 +23,6 @@ void ARSRPlayerController::BeginPlay()
 	HUD = Cast<ARSRHUD>(GetHUD());
 
 	AddSubsystemMappingContext();
-	SetPlayInputMode();
 	OnGameStart();
 }
 
@@ -44,6 +43,7 @@ void ARSRPlayerController::OnGameStart()
 	}
 
 	PauseMovement(true);
+	SetPlayInputMode();
 
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRPlayerController::StartGameTimer, 3.0f, false);

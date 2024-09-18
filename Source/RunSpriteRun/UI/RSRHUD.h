@@ -23,9 +23,8 @@ public:
 	UUserWidget* GameStartWidget;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UUserWidget>
-	GameStartClass;
-	/* Win Screen end */
+	TSubclassOf<UUserWidget> GameStartClass;
+	/* Game start end */
 
 	/* Timer */
 	void AddTimerOverlay();

@@ -16,7 +16,6 @@ ARSRCharacter::ARSRCharacter()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
-	//SpringArm->TargetArmLength = FOVBase;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm);

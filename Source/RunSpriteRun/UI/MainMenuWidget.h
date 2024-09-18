@@ -8,7 +8,7 @@
 
 class UButton;
 class UTextBlock;
-
+class ARSRPlayerController;
 /**
  * 
  */

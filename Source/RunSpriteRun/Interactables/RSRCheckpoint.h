@@ -37,6 +37,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Checkpoint)
 	UPaperFlipbook* ActivatedCheckpoint;
 
+	UPROPERTY(EditAnywhere, Category = Checkpoint)
+	UPaperFlipbook* IdleCheckpoint;
+
 	UFUNCTION()
 	void OnTriggerBoxOverlap(
 		UPrimitiveComponent* OverlappedComponent,
@@ -45,5 +48,4 @@ private:
 		int32 OtherBodyIndex,
 		bool bFromSweep,
 		const FHitResult& SweepResult);
-
 };

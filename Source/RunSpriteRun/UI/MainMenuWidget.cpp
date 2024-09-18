@@ -9,6 +9,7 @@
 #include "RunSpriteRun/RSRSaveGame.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "RunSpriteRun/Player/RSRPlayerController.h"
+#include "RunSpriteRun/GameMode/RSRGameModeBase.h"
 
 bool UMainMenuWidget::Initialize()
 {
@@ -32,16 +33,7 @@ bool UMainMenuWidget::Initialize()
 	}
 
 	SetIsFocusable(true);
-	ARSRPlayerController* PlayerController = Cast<ARSRPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-	if (PlayerController)
-	{
-		FInputModeGameAndUI InputModeData;
-		InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-		InputModeData.SetHideCursorDuringCapture(true);
-		PlayerController->SetInputMode(InputModeData);
 
-		PlayerController->bShowMouseCursor = true;
-	}
 	return true;
 }
 
@@ -59,10 +51,10 @@ void UMainMenuWidget::StartButtonClicked()
 
 FText UMainMenuWidget::SetBestTimeText()
 {
-	if (URSRGameInstance* GameInstance = Cast<URSRGameInstance>(GetGameInstance()))
+	ARSRGameModeBase* GameMode = Cast<ARSRGameModeBase>(UGameplayStatics::GetGameMode(this));
+	if (GameMode)
 	{
-		GameInstance->LoadGame();
-		BestTime = GameInstance->GetGameData()->BestTime;
+		BestTime = GameMode->GetBestTime();
 	}
 
 	if (BestTime == 7200.0f)

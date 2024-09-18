@@ -38,7 +38,7 @@ void UWinScreenWidget::QuitButtonClicked()
 void UWinScreenWidget::RetryButtonClicked()
 {
 	RetryButton->SetIsEnabled(false);
-	UGameplayStatics::OpenLevel(this, FName("testmap"));
+	UGameplayStatics::OpenLevel(this, FName("Main"));
 }
 
 void UWinScreenWidget::MainMenuButtonClicked()

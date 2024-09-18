@@ -25,7 +25,10 @@ class RUNSPRITERUN_API ARSRPlayerController : public APlayerController
 	
 public:
 	ARSRPlayerController();
+
+	void OnGameStart();
 	void OnGameWon();
+	void SetMenuInputMode();
 
 	UFUNCTION()
 	void PauseMovement(bool bShouldPause);
@@ -35,7 +38,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	void SetPlayInputMode();
+
 	virtual void SetupInputComponent() override;
 
 private:
@@ -74,9 +77,7 @@ private:
 	void Jump(const FInputActionValue& InputActionValue);
 	void PauseGame(const FInputActionValue& InputActionValue);
 
-	void SetMenuInputMode();
-
-	void OnGameStart();
+	void SetPlayInputMode();
 
 	UFUNCTION()
 	void StartGameTimer();
