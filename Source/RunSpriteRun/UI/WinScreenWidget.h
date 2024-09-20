@@ -16,8 +16,6 @@ class RUNSPRITERUN_API UWinScreenWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-
 protected:
 	virtual bool Initialize() override;
 

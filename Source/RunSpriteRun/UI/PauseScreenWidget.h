@@ -17,8 +17,6 @@ class RUNSPRITERUN_API UPauseScreenWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-
 protected:
 	virtual bool Initialize() override;
 

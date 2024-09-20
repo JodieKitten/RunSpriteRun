@@ -24,11 +24,7 @@ class RUNSPRITERUN_API ARSRPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	ARSRPlayerController();
-
-	void OnGameStart();
 	void OnGameWon();
-	void SetMenuInputMode();
 
 	UFUNCTION()
 	void PauseMovement(bool bShouldPause);
@@ -38,7 +34,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
 	virtual void SetupInputComponent() override;
 
 private:
@@ -78,7 +73,10 @@ private:
 	void PauseGame(const FInputActionValue& InputActionValue);
 
 	void SetPlayInputMode();
+	void SetMenuInputMode();
 
 	UFUNCTION()
 	void StartGameTimer();
+
+	void OnGameStart();
 };

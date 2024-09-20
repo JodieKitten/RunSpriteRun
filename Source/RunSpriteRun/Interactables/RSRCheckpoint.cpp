@@ -3,7 +3,6 @@
 #include "RSRCheckpoint.h"
 #include "Paper2D/Classes/PaperFlipbookComponent.h"
 #include "Components/BoxComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "RunSpriteRun/Character/RSRCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -42,4 +41,3 @@ void ARSRCheckpoint::OnTriggerBoxOverlap(
 		Character->SetRespawnLocation(GetActorLocation());
 	}
 }
-

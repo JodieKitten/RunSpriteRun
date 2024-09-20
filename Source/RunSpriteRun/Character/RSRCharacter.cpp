@@ -66,11 +66,7 @@ void ARSRCharacter::SetFlipbook()
 	if (CurrentVelocity.Length() > 0)
 	{
 		GetSprite()->SetFlipbook(MoveFlipbook);
-
-		if (GetSprite()->GetPlaybackPositionInFrames() == 1)
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, RunningSound, GetActorLocation(), 1.0f, 1.0f, 0.0f, nullptr, SoundConcurrency);
-		}
+		PlayRunningSound();
 	}
 	else if (CurrentVelocity.Length() == 0 && !bIsDead && !bIsRespawning)
 	{
@@ -92,6 +88,15 @@ void ARSRCharacter::HandleRotation()
 	else if (GetCharacterMovement()->Velocity.X > 0.0f || ((GetCharacterMovement()->Velocity.X == 0.0f && !bIsMovingLeft)))
 	{
 		GetSprite()->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
+	}
+}
+
+void ARSRCharacter::PlayRunningSound()
+{
+	if (GetSprite()->GetPlaybackPositionInFrames() == 1)
+	{
+		UGameplayStatics::PlaySoundAtLocation(
+			this, RunningSound, GetActorLocation(), RunningSoundVolumeMultiplier, RunningSoundPitchMiltiplier, 0.0f, nullptr, SoundConcurrency);
 	}
 }
 

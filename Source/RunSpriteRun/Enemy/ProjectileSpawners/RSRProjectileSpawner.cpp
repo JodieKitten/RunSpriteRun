@@ -33,6 +33,6 @@ void ARSRProjectileSpawner::Fire()
 	ARSRProjectile* SpawnedProjectile = GetWorld()->SpawnActor<ARSRProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentTransform(), Params);
 	SpawnedProjectile->SetLifeSpan(ProjectileLifespan);
 
-	UGameplayStatics::PlaySoundAtLocation(this, ShootSound, GetActorLocation(), FRotator::ZeroRotator);
+	UGameplayStatics::PlaySoundAtLocation(
+		this, ShootSound, GetActorLocation(), FRotator::ZeroRotator, ShootSoundVolumeMultiplier, ShootSoundPitchMiltiplier, 0.0f, ShootSoundAttenuation);
 }
-

@@ -30,27 +30,25 @@ public:
 
 	void Move(FVector Direction, bool InIsMovingLeft);
 	virtual void Jump() override;
-
-	FVector StartingLocation;
 	void SetRespawnLocation(FVector InRespawnLocation);
+	void ChangeCameraView();
+	virtual void Landed(const FHitResult& Hit) override;
+	void SetHeartSpriteVisible();
 
 	UFUNCTION(BlueprintCallable)
 	void RespawnCharacter();
 
-	void ChangeCameraView();
-	virtual void Landed(const FHitResult& Hit) override;
-
 	UFUNCTION(BlueprintCallable)
 	void Die();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPaperSpriteComponent* HeartSprite;
 
 	bool bIsDead = false;
 
 	bool bHasKey = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UPaperSpriteComponent* HeartSprite;
-
-	void SetHeartSpriteVisible();
+	FVector StartingLocation;
 
 protected:
 	virtual void BeginPlay() override;
@@ -59,6 +57,7 @@ protected:
 private:
 	void SetFlipbook();
 	void HandleRotation();
+	void PlayRunningSound();
 
 	void SetRespawnToFalse();
 	void PauseMovement(bool bShouldPause);
@@ -98,6 +97,12 @@ private:
 	bool bIsMovingLeft = false;
 
 	bool bIsRespawning = false;
+
+	UPROPERTY(EditAnywhere)
+	float RunningSoundVolumeMultiplier = 0.8f;
+
+	UPROPERTY(EditAnywhere)
+	float RunningSoundPitchMiltiplier = 1.0f;
 
 	UPROPERTY(EditAnywhere)
 	float FOVBase = 2000.0f;

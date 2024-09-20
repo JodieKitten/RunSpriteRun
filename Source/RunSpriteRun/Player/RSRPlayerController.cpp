@@ -10,10 +10,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "RunSpriteRun/GameMode/RSRGameModeBase.h"
 
-ARSRPlayerController::ARSRPlayerController()
-{
-
-}
 
 void ARSRPlayerController::BeginPlay()
 {

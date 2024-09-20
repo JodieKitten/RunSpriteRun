@@ -39,7 +39,6 @@ void ARSRProjectile::BeginPlay()
 	{ 	
 		Sphere->OnComponentBeginOverlap.AddDynamic(this, &ARSRProjectile::OnSphereOverlap);
 	}
-
 }
 
 void ARSRProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent,
@@ -51,4 +50,3 @@ void ARSRProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	IDamageInterface::OnSphereOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 }
-

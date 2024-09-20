@@ -6,6 +6,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "RunSpriteRun/GameMode/RSRGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "Math/UnrealMathUtility.h"
 
 bool UTimerWidget::Initialize()
 {
@@ -37,7 +38,7 @@ bool UTimerWidget::Initialize()
 
 bool UTimerWidget::IsBestTimeDefaultTime()
 {
-	return BestTime == DefaultBestTime;
+	return FMath::IsNearlyEqual(BestTime, DefaultBestTime);
 }
 
 FText UTimerWidget::SetCurrentTimeText()

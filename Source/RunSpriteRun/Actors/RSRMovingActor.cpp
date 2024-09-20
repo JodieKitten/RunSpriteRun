@@ -42,7 +42,7 @@ void ARSRMovingActor::ResetLocationOnPlayerDeath()
 		InterpToMovementComponent->StopMovementImmediately();
 
 		FTimerHandle TimerHandle;
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRMovingActor::ReactivateInterpMovement, 1.0f, false);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRMovingActor::ReactivateInterpMovement, ResetInterpDelay, false);
 	}
 }
 

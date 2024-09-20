@@ -49,6 +49,4 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	USphereComponent* Sphere;
 
-
-	
 };

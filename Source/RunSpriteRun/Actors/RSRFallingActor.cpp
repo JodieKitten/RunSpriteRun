@@ -93,7 +93,7 @@ void ARSRFallingActor::SpawnFallingActor()
 void ARSRFallingActor::DelayedDrop()
 {
 	ProjectileMovementComponent->Activate();
-	UGameplayStatics::PlaySoundAtLocation(this, FallingSound, GetActorLocation(), FRotator::ZeroRotator);
+	UGameplayStatics::PlaySoundAtLocation(this, FallingSound, GetActorLocation(), FRotator::ZeroRotator, DropSoundVolumeMultiplier);
 }
 
 void ARSRFallingActor::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent,

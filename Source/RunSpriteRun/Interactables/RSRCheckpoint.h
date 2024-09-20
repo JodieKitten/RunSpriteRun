@@ -19,12 +19,12 @@ class RUNSPRITERUN_API ARSRCheckpoint : public AActor
 public:	
 	ARSRCheckpoint();
 
-	FVector RespawnLocation;
-
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	FVector RespawnLocation;
+
 	UPROPERTY(EditAnywhere, Category = Checkpoint)
 	UPaperFlipbookComponent* Flipbook;
 

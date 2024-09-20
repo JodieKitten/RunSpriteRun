@@ -65,4 +65,11 @@ private:
 
 	void ChangeCameraView();
 	void ResetTrampoline();
+
+	UPROPERTY(EditAnywhere)
+	float BoingSoundVolumeMultiplier = 0.8f;
+
+	UPROPERTY(EditAnywhere)
+	float DropDelay = 1.0f;
+
 };

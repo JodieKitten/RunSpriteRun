@@ -30,12 +30,6 @@ void ARSRHUD::AddKeyNeededOverlay()
 void ARSRHUD::AddWinScreenOverlay()
 {
 	CreateWidgetAndAddToViewport(WinScreenWidget, WinScreenClass, false);
-	//WinScreenWidget->bIsFocusable = true;
-}
-
-void ARSRHUD::RemoveWidgetFromParent(UUserWidget* WidgetToRemove)
-{
-	WidgetToRemove->RemoveFromParent();
 }
 
 void ARSRHUD::CreateWidgetAndAddToViewport(UUserWidget* Widget, TSubclassOf<UUserWidget> WidgetClass, bool bRemove, float Duration)
@@ -57,4 +51,9 @@ void ARSRHUD::CreateWidgetAndAddToViewport(UUserWidget* Widget, TSubclassOf<UUse
 		TimerDelegate.BindUFunction(this, FName("RemoveWidgetFromParent"), Widget);
 		GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, Duration, false);
 	}
+}
+
+void ARSRHUD::RemoveWidgetFromParent(UUserWidget* WidgetToRemove)
+{
+	WidgetToRemove->RemoveFromParent();
 }

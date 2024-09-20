@@ -9,6 +9,7 @@
 class UPaperSpriteComponent;
 class ARSRProjectile;
 class USoundWave;
+class USoundAttenuation;
 
 UCLASS()
 class RUNSPRITERUN_API ARSRProjectileSpawner : public AActor
@@ -36,9 +37,18 @@ private:
 	UPROPERTY(EditAnywhere, Category = Projectile)
 	USoundWave* ShootSound;
 
+	UPROPERTY(EditAnywhere, Category = Projectile)
+	USoundAttenuation* ShootSoundAttenuation;
+
 	UPROPERTY(EditAnywhere)
 	float SpawnSpeed = 2.0f;
 
 	UPROPERTY(EditAnywhere)
 	float ProjectileLifespan = 3.0f;
+
+	UPROPERTY(EditAnywhere)
+	float ShootSoundVolumeMultiplier = 0.8f;
+
+	UPROPERTY(EditAnywhere)
+	float ShootSoundPitchMiltiplier = 1.0f;
 };

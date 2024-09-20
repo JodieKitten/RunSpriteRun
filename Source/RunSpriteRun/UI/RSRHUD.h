@@ -16,61 +16,55 @@ class RUNSPRITERUN_API ARSRHUD : public AHUD
 	GENERATED_BODY()
 
 public:
-	/* Game start */
 	void AddGameStartOverlay();
+	void AddTimerOverlay();
+	void AddKeyFoundOverlay();
+	void AddKeyNeededOverlay();
+	void AddWinScreenOverlay();
 
+private:
 	UPROPERTY()
 	UUserWidget* GameStartWidget;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> GameStartClass;
-	/* Game start end */
 
-	/* Timer */
-	void AddTimerOverlay();
+	// Set to the same float as the countdown itself
+	UPROPERTY(EditAnywhere)
+	float GameStartWidgetDuration = 3.0f;
 
 	UPROPERTY()
 	UUserWidget* TimerWidget;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> TimerWidgetClass;
-	/* Timer end */
-
-	/* Key Found */
-	void AddKeyFoundOverlay();
 
 	UPROPERTY()
 	UUserWidget* KeyFoundWidget;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> KeyFoundClass;
-	/* Key Found end */
 
-	/* Key Needed */
-	void AddKeyNeededOverlay();
+	UPROPERTY(EditAnywhere)
+	float KeyFoundWidgetDuration = 5.0f;
 
 	UPROPERTY()
 	UUserWidget* KeyNeededWidget;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> KeyNeededClass;
-	/* Key Needed end*/
 
-	/* Win Screen */
-	void AddWinScreenOverlay();
+	UPROPERTY(EditAnywhere)
+	float KeyNeededWidgetDuration = 5.0f;
 
 	UPROPERTY()
 	UWinScreenWidget* WinScreenWidget;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UWinScreenWidget> WinScreenClass;
-	/* Win Screen end */
 
 	UFUNCTION()
 	void RemoveWidgetFromParent(UUserWidget* WidgetToRemove);
 
 	void CreateWidgetAndAddToViewport(UUserWidget* Widget, TSubclassOf<UUserWidget> WidgetClass, bool bRemove = true, float Duration = 5.0f);
-
-	UPROPERTY(EditAnywhere)
-	float DelayDuration = 5.0f;
 };

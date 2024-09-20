@@ -5,9 +5,7 @@
 #include "Paper2D/Classes/PaperSpriteComponent.h"
 #include "RunSpriteRun/Character/RSRCharacter.h"
 #include "Kismet/Gameplaystatics.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Components/BoxComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 ARSRBouncyActor::ARSRBouncyActor()
 {
@@ -43,11 +41,11 @@ void ARSRBouncyActor::OnComponentOverlap(UPrimitiveComponent* OverlappedComponen
 	{
 		Character->LaunchCharacter(FVector(LaunchVelocityX, 0.0f, LaunchVelocityZ), true, true);
 		ChangeCameraView();
-		UGameplayStatics::PlaySoundAtLocation(this, BoingSound, GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, BoingSound, GetActorLocation(), BoingSoundVolumeMultiplier);
 		Sprite->SetSprite(TrampolineUp);
 
 		FTimerHandle TimerHandle;
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRBouncyActor::ResetTrampoline, 1.0f, false);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ARSRBouncyActor::ResetTrampoline, DropDelay, false);
 	}
 }
 

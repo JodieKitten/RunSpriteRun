@@ -21,12 +21,12 @@ public:
 	ARSRLock();
 	virtual void Tick(float DeltaTime) override;
 
-	ARSRGem* FinalGem;
-
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	ARSRGem* FinalGem;
+
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* SceneComponent;
 

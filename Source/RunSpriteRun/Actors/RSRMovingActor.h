@@ -44,4 +44,7 @@ private:
 
 	FInterpControlPoint ControlPointOne;
 	FInterpControlPoint ControlPointTwo;
+
+	UPROPERTY(EditAnywhere)
+	float ResetInterpDelay = 1.0f;
 };

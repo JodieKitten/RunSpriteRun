@@ -20,12 +20,6 @@ class RUNSPRITERUN_API ARSRFallingActor : public AActor, public IDamageInterface
 public:	
 	ARSRFallingActor();
 
-	UPROPERTY(EditAnywhere)
-	float RespawnDelay = 4.0f;
-
-	UPROPERTY(EditAnywhere)
-	float DropDelay = 0.0f;
-
 	UFUNCTION()
 	void OnSphereOverlap(
 		UPrimitiveComponent* OverlappedComponent,
@@ -38,11 +32,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	FTransform StartingTransform;
-
 private:
 	bool bHasSpawned = false;
 	bool bIsAlreadyOverlapping = false;
+
+	FTransform StartingTransform;
 
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* DefaultRoot;
@@ -77,5 +71,14 @@ private:
 	void SpawnFallingActor();
 
 	void DelayedDrop();
+
+	UPROPERTY(EditAnywhere)
+	float RespawnDelay = 4.0f;
+
+	UPROPERTY(EditAnywhere)
+	float DropDelay = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+	float DropSoundVolumeMultiplier = 0.5f;
 
 };

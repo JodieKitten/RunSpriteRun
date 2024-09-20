@@ -16,15 +16,16 @@ class RUNSPRITERUN_API URSRGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 	
-	void Init() override;
-
-	FString SaveSlot = "GameData";
-
-	URSRSaveGame* GameData;
-
 public:
-	void SaveGame();
+	URSRSaveGame* GameData;
 	void LoadGame();
 	void SavePlayerTimeData(float BestTimeRecorded);
 	URSRSaveGame* GetGameData() { return GameData; }
+
+protected:
+	void Init() override;
+
+private:
+	void SaveGame();
+	FString SaveSlot = "GameData";
 };
