@@ -105,10 +105,10 @@ private:
 	float RunningSoundPitchMiltiplier = 1.0f;
 
 	UPROPERTY(EditAnywhere)
-	float FOVBase = 2000.0f;
+	float FOVBase = 500.0f;
 
 	UPROPERTY(EditAnywhere)
-	float FOVAirbone = 2500.0f;
+	float FOVAirbone = 600.0f;
 
 	float TargetOrthoView;
 
