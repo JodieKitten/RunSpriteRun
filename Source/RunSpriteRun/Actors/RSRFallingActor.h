@@ -76,6 +76,9 @@ private:
 	float RespawnDelay = 4.0f;
 
 	UPROPERTY(EditAnywhere)
+	bool bUseDropDelay = false;
+
+	UPROPERTY(EditAnywhere)
 	float DropDelay = 0.0f;
 
 	UPROPERTY(EditAnywhere)

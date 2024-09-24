@@ -65,7 +65,7 @@ void ARSRFallingActor::OnTriggerBoxOverlap(UPrimitiveComponent* OverlappedCompon
 		// Set lifespan to just over the respawn delay so respawn is still triggered
 		SetLifeSpan(RespawnDelay + 1.0f);
 
-		if (DropDelay > 0.0f)
+		if (bUseDropDelay)
 		{
 			FTimerHandle DropTimerHandle;
 			GetWorldTimerManager().SetTimer(DropTimerHandle, this, &ARSRFallingActor::DelayedDrop, DropDelay, false);
