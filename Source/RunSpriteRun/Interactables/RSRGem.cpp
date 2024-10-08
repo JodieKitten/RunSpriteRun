@@ -42,6 +42,11 @@ void ARSRGem::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 {
 	if (ARSRCharacter* Character = Cast<ARSRCharacter>(OtherActor))
 	{
+		if (ActorHasTag("FinalGem"))
+		{
+			Waypoint->SetWorldLocation(Character->StartingLocation);
+		}
+
 		FVector DestinationLocation = Waypoint->GetComponentLocation();
 		FRotator DestinationRotation = Waypoint->GetComponentRotation();
 
