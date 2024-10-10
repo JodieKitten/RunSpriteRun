@@ -32,6 +32,24 @@ void ARSRCharacter::SetHeartSpriteVisible()
 	HeartSprite->SetVisibility(true);
 }
 
+void ARSRCharacter::EnableCameraLag(bool bEnable)
+{
+	SpringArm->bEnableCameraLag = bEnable;
+}
+
+bool ARSRCharacter::TeleportTo(const FVector& DestLocation, const FRotator& DestRotation, bool bIsATest, bool bNoCheck)
+{
+	if (Super::TeleportTo(DestLocation, DestRotation, bIsATest, bNoCheck))
+	{
+		FTimerHandle TimerHandle;
+		FTimerDelegate TimerDelegate;
+		TimerDelegate.BindUFunction(this, FName("EnableCameraLag"), true);
+		GetWorldTimerManager().SetTimer(TimerHandle, TimerDelegate, 1.0f, false);
+	}
+
+	return false;
+}
+
 void ARSRCharacter::BeginPlay()
 {
 	Super::BeginPlay();

@@ -35,11 +35,16 @@ public:
 	virtual void Landed(const FHitResult& Hit) override;
 	void SetHeartSpriteVisible();
 
+	virtual bool TeleportTo(const FVector& DestLocation, const FRotator& DestRotation, bool bIsATest = false, bool bNoCheck = false) override;
+
 	UFUNCTION(BlueprintCallable)
 	void RespawnCharacter();
 
 	UFUNCTION(BlueprintCallable)
 	void Die();
+
+	UFUNCTION()
+	void EnableCameraLag(bool bEnable);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UPaperSpriteComponent* HeartSprite;

@@ -7,6 +7,7 @@
 #include "RSRLock.generated.h"
 
 class UPaperSpriteComponent;
+class UPaperSprite;
 class UBoxComponent;
 class USoundBase;
 class ARSRGem;
@@ -35,6 +36,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	UPaperSpriteComponent* Sprite;
+
+	UPROPERTY(EditDefaultsOnly)
+	UPaperSprite* UnlockedSprite;
 
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* OverlapBox;

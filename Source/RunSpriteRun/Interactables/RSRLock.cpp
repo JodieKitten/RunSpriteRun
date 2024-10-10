@@ -65,7 +65,7 @@ void ARSRLock::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 		{
 			UGameplayStatics::SpawnSoundAtLocation(this, UnlockSound, GetActorLocation(), FRotator::ZeroRotator);
 			UGameplayStatics::SpawnSoundAtLocation(this, VictorySound, GetActorLocation(), FRotator::ZeroRotator);
-			Sprite->SetVisibility(false);
+			Sprite->SetSprite(UnlockedSprite);
 			SetActorEnableCollision(false);
 			Character->bHasKey = false;
 

@@ -50,6 +50,7 @@ void ARSRGem::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent,
 		FVector DestinationLocation = Waypoint->GetComponentLocation();
 		FRotator DestinationRotation = Waypoint->GetComponentRotation();
 
+		Character->EnableCameraLag(false);
 		Character->TeleportTo(DestinationLocation, DestinationRotation);
 		UGameplayStatics::PlaySoundAtLocation(this, WarpSound, GetActorLocation(), FRotator::ZeroRotator);
 	}
